@@ -42,9 +42,9 @@ def suppress_non_maximum(bboxes):
 
 
 class SinglePair(Dataset):
-    def __init__(self, method):
-        self.path_to_image1 = "demo_images/img1.png"
-        self.path_to_image2 = "demo_images/img2.jpg"
+    def __init__(self, method, img_path_1, img_path_2):
+        self.path_to_image1 = img_path_1
+        self.path_to_image2 = img_path_2
         self.split = "test"
         self.marshal_getitem_data = self.import_method_specific_functions(method)
 
@@ -95,6 +95,8 @@ if __name__ == "__main__":
     parser = DataModule.add_data_specific_args(parser)
     parser.add_argument("--load_weights_from", type=str, default=None)
     parser.add_argument("--config_file", required=True)
+    parser.add_argument("--img_path_1", required=True, type=str)
+    parser.add_argument("--img_path_2", required=True, type=str)
     args = parser.parse_args()
     args = EasyDict(vars(args))
     configs = get_easy_dict_from_yaml_file(args.config_file)
@@ -106,7 +108,7 @@ if __name__ == "__main__":
         elif key not in configs.keys():
             configs[key] = args[key]
 
-    dataset = SinglePair(method="centernet")
+    dataset = SinglePair("centernet", args.img_path_1, args.img_path_2)
     dataloader = DataLoader(
         dataset,
         batch_size=1,
