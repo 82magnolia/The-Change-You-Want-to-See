@@ -253,7 +253,7 @@ def marshal_getitem_data(data, split):
             target_region_and_annotations,
         ) = utils.geometry.resize_image_and_annotations(
             data["image1"],
-            output_shape_as_hw=(256, 256),
+            output_shape_as_hw=(512, 512),
             annotations=data["image1_target_annotations"],
         )
         data["image1_target_annotations"] = target_region_and_annotations
@@ -262,7 +262,7 @@ def marshal_getitem_data(data, split):
             target_region_and_annotations,
         ) = utils.geometry.resize_image_and_annotations(
             data["image2"],
-            output_shape_as_hw=(256, 256),
+            output_shape_as_hw=(512, 512),
             annotations=data["image2_target_annotations"],
         )
         data["image2_target_annotations"] = target_region_and_annotations
