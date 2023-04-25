@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import shapely.geometry
 from easydict import EasyDict
-from PIL import Image
+from PIL import Image, ImageOps
 from torch.utils.data import DataLoader, Dataset
 from torchvision.transforms.functional import pil_to_tensor
 
@@ -57,6 +57,7 @@ class SinglePair(Dataset):
 
     def read_image_as_tensor(self, path_to_image):
         pil_image = Image.open(path_to_image).convert("RGB")
+        pil_image = ImageOps.exif_transpose(pil_image)
         image_as_tensor = pil_to_tensor(pil_image).float() / 255.0
         return image_as_tensor
 
